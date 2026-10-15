@@ -227,12 +227,32 @@ a{color:inherit}
   padding-top:16px;
   border-top:1px solid var(--rule);
 }
+/* contain, not cover — these are maps and documents, and cropping into the
+   middle of one makes it unrecognisable */
+/* explicit height overrides the images' own height attributes, which would
+   otherwise win over aspect-ratio and blow the cards out */
 .card img{
   border:1px solid var(--rule);
-  background:var(--surface);
-  aspect-ratio:4/3;
-  object-fit:cover;
+  background:var(--surface-2);
   width:100%;
+  height:215px;
+  object-fit:contain;
+  padding:7px;
+}
+.card .noimg{
+  border:1px dashed var(--rule);
+  background:var(--surface-2);
+  width:100%;
+  height:215px;
+  display:grid;
+  place-items:center;
+  font-family:var(--ff-mono);
+  font-size:10.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--mute);
+  text-align:center;
+  padding:10px;
 }
 .card h3{
   font-family:var(--ff-display);
