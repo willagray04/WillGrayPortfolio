@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Will Gray — Brazos County Hazard Risk</title>
+<meta name="description" content="Multi-Hazard Exposure and Population Risk Mapping in Brazos County, Texas — problem, role, data and method.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+      integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="style.css">
+<style>
+  .flow{width:100%;height:auto;display:block}
+  .flow .bx{fill:var(--surface-2);stroke:var(--rule);stroke-width:1}
+  .flow .bx-key{fill:var(--accent-wash);stroke:var(--brass);stroke-width:1.5}
+  .flow .t{fill:var(--ink);font-family:var(--ff-display);font-size:13px;font-weight:600}
+  .flow .s{fill:var(--mute);font-family:var(--ff-mono);font-size:10px;letter-spacing:.04em}
+  .flow .lbl{fill:var(--brass);font-family:var(--ff-mono);font-size:9.5px;letter-spacing:.1em}
+  .flow .ar{stroke:var(--brass);stroke-width:1.4;fill:none}
+</style>
+</head>
+<body>
+
+<header class="sitehead">
+  <div class="frame inner">
+    <a class="wordmark" href="index.html">Will Gray</a>
+    <nav class="menu" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="resume.html">Resume</a>
+    </nav>
+  </div>
+</header>
+
+<main class="frame">
+
+  <div class="pagehead">
+    <p class="eyebrow">GIS Programming &middot; Project proposal submitted 23 September &middot; In progress</p>
+    <h1>Multi-Hazard Exposure and Population Risk Mapping in Brazos County, Texas</h1>
+    <p class="lede">
+      Which census tracts in Brazos County face the highest risk of natural hazard
+      exposure &mdash; wildfire, extreme heat, and flooding &mdash; and how much danger
+      are critical infrastructure and major population centers truly in?
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>The problem</h2></div>
+  <div class="prose">
+    <p>
+      Natural hazards such as wildfire, extreme heat, and flooding pose growing risks to
+      communities across Texas, but that risk is rarely distributed evenly within a single
+      county. Brazos County &mdash; home to Bryan&ndash;College Station and Texas A&amp;M
+      University &mdash; is exposed to all three.
+    </p>
+    <p>
+      The data that exists already reports them separately. FEMA&rsquo;s National Risk
+      Index gives a score for wildfire, a score for extreme heat, and a score for flooding,
+      but never one comparable number. That makes it hard to answer the question a planner
+      or emergency manager actually has: across the whole county, where is risk
+      concentrated, and who and what is sitting in it?
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>My role</h2></div>
+  <div class="prose">
+    <p>
+      I am the <strong>team contact and project lead</strong>, and I am responsible for
+      <strong>data acquisition</strong>. That means coordinating the schedule, submitting
+      the proposal, and sourcing the three FEMA hazard layers along with the population and
+      infrastructure data for Brazos County census tracts &mdash; getting all of it into a
+      state the rest of the team can actually analyse.
+    </p>
+    <p>The remaining roles on the team are:</p>
+    <ul class="detail">
+      <li>Background and research framing</li>
+      <li>Composite risk scoring in Python</li>
+      <li>Weighting and sensitivity testing</li>
+      <li>Map automation scripting</li>
+      <li>Cartography and map exhibits</li>
+      <li>Writing, editing, and deliverables</li>
+    </ul>
+    <p style="margin-top:1.1em">
+      Team member names <span class="add">[ADD]</span>
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>Data and method</h2></div>
+  <div class="prose">
+    <h3 style="margin-top:1.2em">Data</h3>
+    <ul class="detail">
+      <li><strong>FEMA National Risk Index</strong> &mdash; hazard scores for wildfire, extreme heat, and flooding at the census-tract level for Brazos County, Texas.</li>
+      <li><strong>U.S. Census / ACS</strong> &mdash; population data, used to quantify how many people sit inside each risk band.</li>
+      <li><strong>Critical infrastructure locations</strong> &mdash; hospitals, schools, and emergency services, from a source such as HIFLD or Brazos County GIS open data.</li>
+    </ul>
+
+    <h3>Method</h3>
+    <p>
+      Using Python &mdash; pandas and geopandas &mdash; the three hazard layers are
+      normalized onto a comparable scale and combined into a single composite risk score
+      for each census tract. Multiple weighting schemes are then tested to find the most
+      representative composite value, rather than assuming the three hazards should count
+      equally.
+    </p>
+    <p>
+      Because testing weightings by hand would mean redrawing maps over and over, map
+      production itself is scripted. That turns a weighting change into a re-run instead of
+      an afternoon of cartography, and makes the different scenarios directly comparable.
+    </p>
+  </div>
+
+  <figure>
+    <div class="panel">
+      <div class="panel-bar"><span>Figure 1 &middot; Workflow</span><span class="hi">Proposed</span></div>
+      <div style="padding:18px 16px">
+        <svg class="flow" viewBox="0 0 760 650" role="img"
+             aria-label="Workflow diagram: hazard layers and exposure data are normalized, combined into a composite risk score per census tract using tested weightings, then fed into automated map production and map exhibits.">
+          <defs>
+            <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--brass)"/>
+            </marker>
+          </defs>
+
+          <!-- inputs -->
+          <rect class="bx" x="20" y="24" width="330" height="76" rx="2"/>
+          <text class="t" x="38" y="52">Hazard layers</text>
+          <text class="s" x="38" y="70">FEMA National Risk Index, by census tract</text>
+          <text class="s" x="38" y="86">Wildfire &#183; Extreme heat &#183; Flood</text>
+
+          <rect class="bx" x="410" y="24" width="330" height="76" rx="2"/>
+          <text class="t" x="428" y="52">Exposure data</text>
+          <text class="s" x="428" y="70">Population &#8212; U.S. Census / ACS</text>
+          <text class="s" x="428" y="86">Critical infrastructure &#8212; HIFLD / county GIS</text>
+
+          <path class="ar" d="M185,100 L185,150" marker-end="url(#ah)"/>
+          <path class="ar" d="M575,100 L575,150" marker-end="url(#ah)"/>
+
+          <!-- normalize -->
+          <rect class="bx" x="20" y="152" width="720" height="62" rx="2"/>
+          <text class="t" x="38" y="180">Normalize onto a comparable scale</text>
+          <text class="s" x="38" y="199">pandas &#183; geopandas</text>
+
+          <path class="ar" d="M380,214 L380,266" marker-end="url(#ah)"/>
+
+          <!-- weighting -->
+          <rect class="bx" x="520" y="252" width="220" height="62" rx="2"/>
+          <text class="t" x="538" y="280">Weighting experiments</text>
+          <text class="s" x="538" y="299">Sensitivity testing</text>
+          <path class="ar" d="M520,283 L480,283" marker-end="url(#ah)"/>
+
+          <!-- composite -->
+          <rect class="bx-key" x="20" y="268" width="460" height="76" rx="2"/>
+          <text class="lbl" x="38" y="292">CORE OUTPUT</text>
+          <text class="t" x="38" y="314">Composite risk score</text>
+          <text class="s" x="38" y="332">One comparable value per census tract</text>
+
+          <path class="ar" d="M250,344 L250,396" marker-end="url(#ah)"/>
+
+          <!-- automation -->
+          <rect class="bx" x="20" y="398" width="720" height="62" rx="2"/>
+          <text class="t" x="38" y="426">Python script automates map production</text>
+          <text class="s" x="38" y="445">So each weighting scenario can be compared quickly</text>
+
+          <path class="ar" d="M380,460 L380,512" marker-end="url(#ah)"/>
+
+          <!-- exhibits -->
+          <rect class="bx" x="20" y="514" width="720" height="86" rx="2"/>
+          <text class="t" x="38" y="542">Map exhibits</text>
+          <text class="s" x="38" y="561">Which tracts carry the highest composite risk</text>
+          <text class="s" x="38" y="578">Which infrastructure and population centers sit inside them</text>
+        </svg>
+      </div>
+    </div>
+    <figcaption>
+      Figure 1. Proposed workflow for combining Brazos County hazard layers (wildfire,
+      extreme heat, flood) with population and infrastructure data into a per-census-tract
+      composite risk score, with weighting experiments feeding automated map production.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <div class="panel">
+      <div class="panel-bar">
+        <span>Study area &middot; Brazos County, Texas</span>
+        <span class="hi">Esri World Imagery</span>
+      </div>
+      <div class="mapcanvas" id="studymap"></div>
+    </div>
+    <figcaption>
+      Study area, drawn on the Esri World Imagery basemap. The rectangle marks the
+      approximate extent of Brazos County and is for orientation only &mdash; it is not a
+      surveyed boundary. The census-tract composite risk layer that will sit on this map is
+      <span class="add">[ADD]</span> until the analysis is run.
+    </figcaption>
+  </figure>
+
+  <div class="sectionhead"><h2>What I found</h2></div>
+  <div class="prose">
+    <p>
+      <span class="add">[ADD]</span>
+    </p>
+    <p>
+      The proposal was submitted on 23 September and the analysis is still underway, so
+      there are no results to report yet. When the composite scores and weighting
+      comparisons are finished, this section will hold the ranked tracts, the infrastructure
+      and population counts inside the highest-risk bands, and the map exhibits themselves.
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>What I would do differently</h2></div>
+  <div class="prose">
+    <p>
+      <span class="add">[ADD]</span>
+    </p>
+    <p>
+      This belongs at the end of the project rather than the middle of it &mdash; writing it
+      now would mean inventing a reflection I have not earned yet.
+    </p>
+  </div>
+
+  <dl class="notes">
+    <div><dt>Hazards</dt><dd>3<span class="u">wildfire, heat, flood</span></dd></div>
+    <div><dt>Unit of analysis</dt><dd>Census tract</dd></div>
+    <div><dt>My role</dt><dd>Lead<span class="u">&amp; data acquisition</span></dd></div>
+    <div><dt>Built in</dt><dd>Python<span class="u">pandas &middot; geopandas</span></dd></div>
+    <div><dt>Results</dt><dd><span class="add">[ADD]</span></dd></div>
+  </dl>
+
+  <p style="margin-top:2em">
+    <a class="btn" href="projects.html">&larr; All projects</a>
+  </p>
+
+</main>
+
+<footer class="sitefoot">
+  <div class="frame inner">
+    <a class="mail" href="mailto:willagray04@gmail.com">willagray04@gmail.com</a>
+    <div>
+      Will Gray &middot; College Station, Texas<br>
+      Texas A&amp;M University &middot; December 2026
+    </div>
+  </div>
+</footer>
+
+<button class="themebtn" id="themebtn" type="button" aria-label="Switch colour theme">
+  <span class="dot" aria-hidden="true"></span><span id="themelabel">Light</span>
+</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"
+        integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+(function(){
+  /* theme */
+  var root=document.documentElement,btn=document.getElementById('themebtn'),lab=document.getElementById('themelabel');
+  function stored(){try{return localStorage.getItem('wg-theme')}catch(e){return null}}
+  function save(v){try{localStorage.setItem('wg-theme',v)}catch(e){}}
+  function cur(){return root.getAttribute('data-theme')||'dark'}
+  function apply(t){root.setAttribute('data-theme',t);lab.textContent=t==='dark'?'Light':'Dark'}
+  var s=stored();
+  if(s==='dark'||s==='light'){apply(s)}else{lab.textContent=cur()==='dark'?'Light':'Dark'}
+  btn.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';apply(n);save(n)});
+
+  /* study-area map */
+  var el=document.getElementById('studymap');
+  if(!el||typeof L==='undefined')return;
+
+  // Approximate extent of Brazos County, Texas — for orientation, not a surveyed boundary.
+  var south=30.38, west=-96.63, north=30.90, east=-96.06;
+  var bounds=[[south,west],[north,east]];
+
+  var map=L.map(el,{scrollWheelZoom:true});
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+    maxZoom:19,
+    attribution:'Imagery &copy; Esri, Maxar, Earthstar Geographics, USDA FSA, USGS, Aerogrid, IGN, IGP and the GIS user community'
+  }).addTo(map);
+
+  L.rectangle(bounds,{
+    color:'#D9A85C',weight:1.6,fillColor:'#D9A85C',fillOpacity:.08,dashArray:'6 4'
+  }).addTo(map).bindPopup('<b>Brazos County, Texas</b>Approximate extent &mdash; orientation only, not a surveyed boundary.<br>Study area for the composite hazard risk analysis.');
+
+  map.fitBounds(bounds, {padding:[18,18]});
+  setTimeout(function(){map.invalidateSize()},200);
+})();
+</script>
+
+</body>
+</html>

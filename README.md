@@ -1,99 +1,84 @@
 # Will Gray — Portfolio
 
-A single-page portfolio site. Plain HTML, no build step, no dependencies.
+A multi-page portfolio site. Plain HTML and CSS, no build step, no dependencies.
+
+Live at **https://willagray04.github.io/WillGrayPortfolio/**
 
 ```
-index.html     the whole site — content and styles live here
-assets/        map exhibits and field photography (JPEG)
-assets/roadmap/  all 58 pages of the Pine Island roadmap, p01.jpg - p58.jpg
-.nojekyll      tells GitHub Pages to serve the files as-is
+index.html       home — name, headline, featured project
+about.html       about me and the work I want
+projects.html    a card for each project, linking to its page
+project-1.html   Brazos County multi-hazard risk mapping, in full
+resume.html      resume as a web page, with a PDF download
+style.css        shared by every page
+resume.pdf       downloadable resume
+assets/          figures and photographs
+assets/roadmap/  all 58 pages of the Pine Island roadmap
+.nojekyll        tells GitHub Pages to serve the files as-is
 ```
 
-## Publish it on GitHub Pages
+Every page links to `style.css`, carries the same menu (Home, About, Projects,
+Resume), and has the email address in the footer.
 
-1. Create a new **public** repository on GitHub. If you name it
-   `<your-username>.github.io`, the site lands at the root of your domain;
-   any other name works too and lands at `/<repo-name>/`.
+## Updating it
 
-2. From this folder, push the files:
+Edit, then:
 
-   ```bash
-   git init -b main
-   git add .
-   git commit -m "Portfolio site"
-   git remote add origin https://github.com/<your-username>/<repo-name>.git
-   git push -u origin main
-   ```
+```bash
+cd /Users/williamgray/Downloads/will-gray-portfolio && git add . && git commit -m "Update portfolio" && git push
+```
 
-3. In the repository on GitHub, open **Settings → Pages**, set
-   **Source** to *Deploy from a branch*, pick branch `main` and folder `/ (root)`,
-   and save.
+Changes go live about a minute after each push. Authentication is an SSH key, so
+there is nothing to type.
 
-The site goes live at `https://<your-username>.github.io/<repo-name>/` within
-about a minute. Every later `git push` republishes it.
+## Conventions
 
-## Editing
+**`[ADD]` markers.** Anything the source material did not supply is marked
+`<span class="add">[ADD]</span>` rather than guessed at — unwritten project
+pages, results that do not exist yet, team member names. Search for `class="add"`
+to find them all. Fill them in as the facts arrive.
 
-Everything is in `index.html`.
+**Design tokens.** Colours, fonts and widths are CSS variables in the `:root`
+block at the top of `style.css`. Change a value once and every page follows.
 
-- **Projects** are the five `<section class="sheet">` blocks. Each one has a
-  title, a `.meta` line, a `.prose` narrative, a `.figure` image, and a
-  `.notes` strip of figures at the bottom. Copy a whole block to add a sixth.
-- **Design tokens** (colours, fonts, widths) are the CSS variables in the
-  `:root` block at the top. Change a value once and it updates everywhere.
-- **Images** go in `assets/`. Keep them under about 400 KB each so pages load
-  fast — `sips -s format jpeg -s formatOptions 74 -Z 1500 in.pdf --out out.jpg`
-  does the conversion and resizing on macOS.
+**Theme.** Dark by default; the button bottom-right switches to light and the
+choice is remembered per browser.
 
-The page is dark by default. The button in the bottom-right corner switches it
-to light, and that choice is remembered in the reader's browser.
+**Images.** Keep them under about 400 KB. On macOS:
 
-## The two interactive pieces
+```bash
+sips -s format jpeg -s formatOptions 74 -Z 1500 input.pdf --out assets/output.jpg
+```
 
-**Budget projector (project 01).** Enter a square footage and a cost basis; it
-allocates the total across all 40 cost categories using `COSTCATS` - the mean
-share of total spend across the eight historical jobs in the Sendero database.
-Deliberately, the page ships no Sendero pricing: the reader supplies the cost
-basis, and only the percentage structure is baked in. If you ever clear it with
-Sendero, swapping in real $/sq ft averages is a one-line change to the default
-`value` on `#t-rate`.
+## Adding the remaining project pages
 
-**Flight map (project 05).** Leaflet over Esri World Imagery (aerial, no API key
-required - CARTO's basemaps now need one, so don't switch back). Footprints and frame positions come from `FLIGHTS`, which I built by
-reading the GPS EXIF out of your drone imagery - 416 geotagged frames across five
-sites. `CONTROL` holds the approximate occupation positions parsed from the RINEX
-headers. Both arrays are inlined in `index.html`, so the map works from `file://`
-as well as over HTTP.
+`projects.html` has six cards. Only the first links to a real page; the other
+five are marked `[ADD]`. To add one, copy `project-1.html`, keep the same
+six sections (problem, role, data and method, figure, what I found, what I would
+do differently), and point the card's link at it.
 
-Leaflet loads from cdnjs with subresource-integrity hashes. If you ever bump the
-version, recompute them or the browser will refuse to load the library:
+The earlier single-page version of this site — with a 58-page roadmap viewer, an
+interactive construction budget projector, and a Leaflet map of five drone flight
+sites built from GPS EXIF — is preserved on the `one-page-version` branch. Those
+components can be lifted into project pages 2 through 5:
+
+```bash
+git show one-page-version:index.html > /tmp/one-page.html
+```
+
+## Leaflet
+
+`project-1.html` loads Leaflet 1.9.4 from cdnjs with subresource-integrity
+hashes, over Esri World Imagery (no API key required — CARTO's basemaps now need
+one, so don't switch back). If you bump the version, recompute the hashes or the
+browser will refuse to load it:
 
 ```bash
 curl -s https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js | openssl dgst -sha512 -binary | openssl base64 -A
 ```
 
-## The roadmap page viewer
+## Note on the resume PDF
 
-Project 02 embeds all 58 pages of the Pine Island roadmap. Readers flip with the
-arrows, drag the slider, use the left/right arrow keys, or jump straight to a
-section. Only the current page and its immediate neighbours are downloaded, so
-the embed costs about 160 KB on load rather than 9 MB.
-
-To change the section shortcuts, edit `FB_SECTIONS` near the bottom of
-`index.html` - each entry is a label and the page it jumps to:
-
-```js
-var FB_SECTIONS = [
-  ['Cover', 1], ['Summary', 2], ['Ordinance', 9], ['Financials', 14],
-  ['Timeline', 15], ['Case studies', 25], ['Appendix', 54]
-];
-```
-
-To swap in a different document, re-render its pages into `assets/roadmap/`
-using the same `pNN.jpg` naming and update `FB_TOTAL`.
-
-## Things worth adding later
-
-- A phone number in the title block, if you want it public.
-- A screenshot of the tornado StoryMap, so project 04 shows its own map
-  rather than the companion exhibit from the same course.
+`resume.pdf` is your resume with the mailing address and phone number removed,
+since the site is public. The original is in your Downloads folder as
+`Resume_-_Will_Gray.pdf` if you ever want to swap it in.

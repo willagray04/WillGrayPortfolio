@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Will Gray — About</title>
+<meta name="description" content="About Will Gray and the work he is looking for in land development, construction, and GIS.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="sitehead">
+  <div class="frame inner">
+    <a class="wordmark" href="index.html">Will Gray</a>
+    <nav class="menu" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="about.html" aria-current="page">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="resume.html">Resume</a>
+    </nav>
+  </div>
+</header>
+
+<main class="frame">
+
+  <div class="pagehead">
+    <p class="eyebrow">About</p>
+    <h1>Seeing a project from more than one side</h1>
+    <p class="lede">
+      I am a Texas A&amp;M student finishing a degree in Geographic Information Science
+      and Technology in December 2026, with a minor in Leadership in the Design and
+      Construction Professions.
+    </p>
+  </div>
+
+  <div class="prose">
+    <p>
+      My interest in land development grew out of seeing projects from several different
+      positions. GIS taught me to evaluate land technically. My construction minor and
+      field work taught me what it takes to actually build something. Two summers in civil
+      engineering showed me how entitlements, infrastructure, and permitting decide the
+      direction of a project long before anything happens on site. Working directly for a
+      developer showed me the same project from the owner&rsquo;s side, where cost,
+      feasibility, and risk are weighed against each other.
+    </p>
+    <p>
+      What ties those together is that I like being the person who can move between the
+      spatial data, the cost, and the decision &mdash; not just hand one off to the next
+      group.
+    </p>
+
+    <h3>What I have worked on</h3>
+    <ul class="detail">
+      <li><strong>Land development and entitlements.</strong> Two summers interning at Gray Engineering in Austin, supporting site plan preparation, permitting coordination, and municipal submittals; reviewing construction documents; pre-bid quantity takeoffs; contractor coordination; and construction inspection.</li>
+      <li><strong>Real estate development.</strong> A 2026 internship with Service Group in Austin, shadowing the Vice President of Real Estate Development across site evaluation, deal structuring, and project planning on active projects.</li>
+      <li><strong>Construction estimating.</strong> A 2026 internship with Sendero Homes, where I developed an automated construction cost estimation tool to streamline budget creation and project cost analysis.</li>
+      <li><strong>Underground utility construction.</strong> A summer at Platinum Underground in Georgetown, in the field on utility construction and project operations.</li>
+      <li><strong>GIS and spatial analysis.</strong> Coursework and project work in ArcGIS Pro, hazard and exposure mapping, thematic cartography, GNSS control, and Python-based spatial analysis.</li>
+    </ul>
+
+    <h3>The work I want</h3>
+    <p>
+      I am looking for work in land and real estate development, construction management,
+      and GIS technology &mdash; ideally somewhere those overlap rather than sit in separate
+      departments. The roles that interest me most involve evaluating a property and
+      working out not only what can be built on it, but whether building it makes sense.
+    </p>
+    <p>
+      Longer term I want responsibility for evaluating and executing projects: identifying
+      an opportunity, testing whether it is feasible, assembling the team, and seeing it
+      through.
+    </p>
+
+    <h3>How I work</h3>
+    <p>
+      I am comfortable being the person who goes and gets the data. On the hazard mapping
+      project I am the team contact and handle data acquisition, which means tracking down
+      FEMA, Census, and infrastructure sources and getting them into a usable state before
+      anyone can analyse anything. That part is unglamorous and it decides whether the rest
+      of the project works.
+    </p>
+    <p>
+      I also lean on automation where it earns its place. Scripting map production meant
+      different hazard weightings could be compared quickly instead of being redrawn by
+      hand, and building an estimating tool meant budgets could be checked against real
+      past jobs rather than assembled from scratch each time.
+    </p>
+  </div>
+
+  <dl class="notes">
+    <div><dt>Degree</dt><dd>B.S.<span class="u">GIS &amp; Technology</span></dd></div>
+    <div><dt>Graduating</dt><dd>Dec 2026</dd></div>
+    <div><dt>Minor</dt><dd>LDCP<span class="u">Design &amp; Construction</span></dd></div>
+    <div><dt>GPA</dt><dd>3.604</dd></div>
+    <div><dt>Based</dt><dd>Texas<span class="u">College Station</span></dd></div>
+  </dl>
+
+</main>
+
+<footer class="sitefoot">
+  <div class="frame inner">
+    <a class="mail" href="mailto:willagray04@gmail.com">willagray04@gmail.com</a>
+    <div>
+      Will Gray &middot; College Station, Texas<br>
+      Texas A&amp;M University &middot; December 2026
+    </div>
+  </div>
+</footer>
+
+<button class="themebtn" id="themebtn" type="button" aria-label="Switch colour theme">
+  <span class="dot" aria-hidden="true"></span><span id="themelabel">Light</span>
+</button>
+
+<script>
+(function(){
+  var root=document.documentElement,btn=document.getElementById('themebtn'),lab=document.getElementById('themelabel');
+  function stored(){try{return localStorage.getItem('wg-theme')}catch(e){return null}}
+  function save(v){try{localStorage.setItem('wg-theme',v)}catch(e){}}
+  function cur(){return root.getAttribute('data-theme')||'dark'}
+  function apply(t){root.setAttribute('data-theme',t);lab.textContent=t==='dark'?'Light':'Dark'}
+  var s=stored();
+  if(s==='dark'||s==='light'){apply(s)}else{lab.textContent=cur()==='dark'?'Light':'Dark'}
+  btn.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';apply(n);save(n)});
+})();
+</script>
+
+</body>
+</html>
