@@ -574,20 +574,20 @@ figcaption,.figcaption{
   border-bottom:1px solid var(--rule);
   align-items:flex-end;
 }
-.field{display:flex;flex-direction:column;gap:6px;flex:1 1 150px;min-width:130px}
+.field{display:flex;flex-direction:column;gap:6px;flex:1 1 150px;min-width:0}
 .field label{
   font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--mute);
 }
 .field .wrap{
-  display:flex;align-items:center;gap:6px;
+  display:flex;align-items:center;gap:6px;min-width:0;
   border-bottom:1px solid var(--rule);padding-bottom:5px;
 }
 .field .wrap:focus-within{border-color:var(--brass)}
 .field .pre{font-family:var(--ff-mono);font-size:14px;color:var(--mute);flex:none}
 .field .suf{font-family:var(--ff-mono);font-size:10.5px;color:var(--mute);flex:none}
 .field input{
-  width:100%;border:0;background:transparent;color:var(--ink);
+  width:100%;min-width:0;border:0;background:transparent;color:var(--ink);
   font-family:var(--ff-display);font-weight:600;font-size:21px;
   letter-spacing:-.01em;font-variant-numeric:tabular-nums;padding:0;
   -moz-appearance:textfield;
@@ -607,23 +607,86 @@ figcaption,.figcaption{
   color:var(--mute);margin-top:5px;
 }
 
-.bars{padding:4px 16px 16px}
+/* results table: code | category | share bar | amount | percent.
+   The bar gets its own column — as a full-width underline it read as a
+   divider between rows instead of a value. */
+.bars{padding:0 16px 10px}
+.bars-head,
 .bar{
   display:grid;
-  grid-template-columns:2.9rem minmax(0,1fr) 5.4rem 3.2rem;
+  grid-template-columns:3.1rem minmax(0,1.45fr) minmax(54px,1fr) 6.3rem 3.5rem;
   align-items:center;
-  gap:10px;
-  padding:7px 0;
+  gap:16px;
+}
+.bars-head{
+  padding:11px 16px 9px;
+  border-bottom:1px solid var(--rule);
+  font-family:var(--ff-mono);
+  font-size:9.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--mute);
+}
+.bars-head .r{text-align:right}
+.bar{
+  padding:10px 0;
   border-bottom:1px solid var(--rule-soft);
-  font-size:14.5px;
+  font-size:15px;
 }
 .bar:last-child{border-bottom:0}
-.bar .code{font-family:var(--ff-mono);font-size:10.5px;color:var(--mute);font-variant-numeric:tabular-nums}
-.bar .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-2)}
-.bar .amt{font-family:var(--ff-mono);font-size:13px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
-.bar .pct{font-family:var(--ff-mono);font-size:10.5px;text-align:right;color:var(--mute);font-variant-numeric:tabular-nums}
-.bar .meter{grid-column:1 / -1;height:3px;background:var(--rule-soft);position:relative;margin-top:2px}
-.bar .meter span{position:absolute;inset:0 auto 0 0;background:var(--brass);display:block}
+.bar .code{
+  font-family:var(--ff-mono);font-size:10.5px;color:var(--mute);
+  font-variant-numeric:tabular-nums;
+}
+.bar .nm{
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:var(--ink);
+}
+.bar .track{
+  height:6px;
+  background:var(--rule-soft);
+  position:relative;
+  overflow:hidden;
+}
+.bar .track i{
+  position:absolute;inset:0 auto 0 0;
+  background:var(--brass);
+  display:block;
+}
+.bar .amt{
+  font-family:var(--ff-mono);font-size:13px;text-align:right;
+  font-variant-numeric:tabular-nums;color:var(--ink);
+}
+.bar .pct{
+  font-family:var(--ff-mono);font-size:11px;text-align:right;
+  color:var(--mute);font-variant-numeric:tabular-nums;
+}
+
+@media (max-width:640px){
+  /* column + wrap would wrap items into new columns to the right, and a
+     flex-basis becomes a height once the direction is column */
+  .tool-controls{flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:16px}
+  .field{flex:none;width:100%}
+  .tool-total{
+    flex:none;
+    border-left:0;
+    border-top:1px solid var(--rule);
+    padding-left:0;
+    padding-top:14px;
+  }
+  .bars-head{display:none}
+  .bar{
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:3px 12px;
+    padding:12px 0;
+  }
+  .bar .code,.bar .pct{display:none}
+  /* place explicitly: the full-width track would otherwise push the amount
+     onto a row of its own */
+  .bar .nm{grid-column:1;grid-row:1}
+  .bar .amt{grid-column:2;grid-row:1}
+  .bar .track{grid-column:1 / -1;grid-row:2;margin-top:6px}
+}
 
 .tool-foot{
   display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;

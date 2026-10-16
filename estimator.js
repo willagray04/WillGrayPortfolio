@@ -41,9 +41,9 @@ var COSTCATS=[["6300","Exterior Structures",0.10588,8],["4500","Windows and Door
       html += '<div class="bar">'
            +    '<span class="code">' + c[0] + '</span>'
            +    '<span class="nm">' + c[1] + '</span>'
+           +    '<span class="track"><i style="width:' + w.toFixed(1) + '%"></i></span>'
            +    '<span class="amt">' + money.format(total * c[2]) + '</span>'
            +    '<span class="pct">' + (c[2] * 100).toFixed(2) + '%</span>'
-           +    '<span class="meter"><span style="width:' + w.toFixed(1) + '%"></span></span>'
            +  '</div>';
     }
     barsEl.innerHTML = html;
