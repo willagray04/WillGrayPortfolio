@@ -527,3 +527,120 @@ figcaption,.figcaption{
   .themebtn,.sitehead .menu{display:none}
   body{background:#fff;color:#000}
 }
+
+/* ============================================================
+   MAP + DOCUMENT FRAMING
+   These are white printed sheets sitting on a dark page. Mat them
+   so the paper reads as deliberate, and take a little of the glare
+   off at rest — full brightness on hover and focus.
+   ============================================================ */
+.card img,
+.sheet-img{
+  filter:brightness(.94) saturate(.97);
+  transition:filter .18s ease;
+}
+.card:hover img,
+.card:focus-within img,
+.sheet-img:hover{filter:none}
+
+.sheet{
+  border:1px solid var(--rule);
+  background:var(--surface-2);
+  padding:clamp(10px,1.8vw,18px);
+}
+.sheet-img{
+  width:100%;
+  height:auto;
+  border:1px solid var(--rule);
+  display:block;
+}
+@media (prefers-reduced-motion:reduce){
+  .card img,.sheet-img{transition:none}
+}
+
+/* ============================================================
+   BUDGET PROJECTOR
+   ============================================================ */
+.tool{
+  margin-top:clamp(24px,3.5vw,34px);
+  border:1px solid var(--rule);
+  background:var(--surface);
+}
+.tool-controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px 22px;
+  padding:16px 16px 18px;
+  border-bottom:1px solid var(--rule);
+  align-items:flex-end;
+}
+.field{display:flex;flex-direction:column;gap:6px;flex:1 1 150px;min-width:130px}
+.field label{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--mute);
+}
+.field .wrap{
+  display:flex;align-items:center;gap:6px;
+  border-bottom:1px solid var(--rule);padding-bottom:5px;
+}
+.field .wrap:focus-within{border-color:var(--brass)}
+.field .pre{font-family:var(--ff-mono);font-size:14px;color:var(--mute);flex:none}
+.field .suf{font-family:var(--ff-mono);font-size:10.5px;color:var(--mute);flex:none}
+.field input{
+  width:100%;border:0;background:transparent;color:var(--ink);
+  font-family:var(--ff-display);font-weight:600;font-size:21px;
+  letter-spacing:-.01em;font-variant-numeric:tabular-nums;padding:0;
+  -moz-appearance:textfield;
+}
+.field input::-webkit-outer-spin-button,
+.field input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+
+.tool-total{flex:1 1 190px;border-left:1px solid var(--rule);padding-left:22px}
+.tool-total .amt{
+  font-family:var(--ff-display);font-weight:700;
+  font-size:clamp(26px,3.6vw,34px);line-height:1.05;
+  letter-spacing:-.025em;color:var(--brass);
+  font-variant-numeric:tabular-nums;
+}
+.tool-total .sub{
+  font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.07em;
+  color:var(--mute);margin-top:5px;
+}
+
+.bars{padding:4px 16px 16px}
+.bar{
+  display:grid;
+  grid-template-columns:2.9rem minmax(0,1fr) 5.4rem 3.2rem;
+  align-items:center;
+  gap:10px;
+  padding:7px 0;
+  border-bottom:1px solid var(--rule-soft);
+  font-size:14.5px;
+}
+.bar:last-child{border-bottom:0}
+.bar .code{font-family:var(--ff-mono);font-size:10.5px;color:var(--mute);font-variant-numeric:tabular-nums}
+.bar .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-2)}
+.bar .amt{font-family:var(--ff-mono);font-size:13px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+.bar .pct{font-family:var(--ff-mono);font-size:10.5px;text-align:right;color:var(--mute);font-variant-numeric:tabular-nums}
+.bar .meter{grid-column:1 / -1;height:3px;background:var(--rule-soft);position:relative;margin-top:2px}
+.bar .meter span{position:absolute;inset:0 auto 0 0;background:var(--brass);display:block}
+
+.tool-foot{
+  display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;
+  padding:12px 16px;border-top:1px solid var(--rule);
+}
+.chip{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:.09em;
+  text-transform:uppercase;padding:6px 11px;
+  border:1px solid var(--rule);background:var(--paper);
+  color:var(--mute);cursor:pointer;
+}
+.chip:hover{border-color:var(--brass);color:var(--brass)}
+.tool-hint{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:.07em;
+  color:var(--mute);margin-left:auto;
+}
+.tool-note{
+  font-family:var(--ff-mono);font-size:10.5px;line-height:1.6;
+  letter-spacing:.03em;color:var(--mute);padding:0 16px 16px;
+}

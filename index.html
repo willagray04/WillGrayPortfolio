@@ -38,43 +38,68 @@
 
   <div class="sectionhead">
     <h2>Featured project</h2>
-    <span class="note">GIS programming &middot; In progress</span>
+    <span class="note">Sendero Homes &middot; Construction estimating &middot; 2026</span>
   </div>
 
-  <div class="featured">
-    <div class="prose">
-      <h3 style="margin-top:0">Multi-Hazard Exposure and Population Risk Mapping in Brazos County, Texas</h3>
-      <p>
-        Natural hazards are rarely distributed evenly inside a single county, but FEMA&rsquo;s
-        National Risk Index reports wildfire, extreme heat, and flooding separately rather
-        than as one comparable picture. This project combines all three at the census-tract
-        level to find where exposure is highest, and how much danger that puts critical
-        infrastructure and population centers in.
-      </p>
-      <p>
-        I am the team contact and project lead, responsible for acquiring the hazard,
-        population, and infrastructure data.
-      </p>
-      <ul class="detail">
-        <li><strong>Three hazards combined</strong> &mdash; wildfire, extreme heat, and flooding &mdash; normalized into a single composite risk score for each census tract.</li>
-        <li><strong>Built in Python</strong> using pandas and geopandas, with a script that automates map production so different hazard weightings can be compared quickly.</li>
-        <li><strong>Status:</strong> proposal submitted; results and findings <span class="add">[ADD]</span></li>
-      </ul>
-      <p style="margin-top:1.6em">
-        <a class="btn" href="project-1.html">Read the full project &rarr;</a>
-      </p>
+  <div class="prose" style="max-width:74ch">
+    <h3 style="margin-top:0">An estimating tool that prices a house against real past jobs</h3>
+    <p>
+      Sendero&rsquo;s cost history lived in a spreadsheet, which meant every new budget
+      started from a rule-of-thumb range. I built an automated estimating tool on top of
+      that history instead: eight completed homes broken into forty cost categories, so a
+      new build gets priced against what the company has actually spent.
+    </p>
+    <p>
+      Try it. Enter a size and a cost basis, and it allocates the budget the way the
+      database does &mdash; each category taking its real share of total spend.
+    </p>
+  </div>
+
+  <div class="tool" id="tool">
+    <div class="panel-bar">
+      <span>Budget projector &middot; working demo</span>
+      <span class="hi">40 categories &middot; 8-job weighting</span>
     </div>
 
-    <figure class="fig" style="margin-top:0">
-      <img src="assets/volcanic-hazards-oregon.jpg" width="1500" height="1159"
-           alt="Hazards map of Oregon showing population density as a graduated choropleth with volcano symbols, highways and hospitals drawn over it.">
-      <figcaption>
-        Earlier hazard-mapping work &mdash; Volcanic Hazards Map, Oregon (GEOG 390, Lab 2,
-        October 2025), pairing population density with hazard locations and the emergency
-        response network. The figure for the Brazos County project is on its own page.
-      </figcaption>
-    </figure>
+    <div class="tool-controls">
+      <div class="field">
+        <label for="t-sqft">Heated &amp; cooled area</label>
+        <div class="wrap">
+          <input id="t-sqft" type="number" min="500" max="30000" step="50" value="6200" inputmode="numeric">
+          <span class="suf">sq ft</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="t-rate">Build cost basis</label>
+        <div class="wrap">
+          <span class="pre">$</span>
+          <input id="t-rate" type="number" min="50" max="2000" step="5" value="520" inputmode="numeric">
+          <span class="suf">/ sq ft</span>
+        </div>
+      </div>
+      <div class="tool-total">
+        <div class="amt" id="t-total">$3,224,000</div>
+        <div class="sub">Projected construction cost</div>
+      </div>
+    </div>
+
+    <div class="bars" id="t-bars"></div>
+
+    <div class="tool-foot">
+      <button class="chip" id="t-toggle" type="button">Show all 40 categories</button>
+      <span class="tool-hint" id="t-shown">Top 12 of 40 shown</span>
+    </div>
+
+    <p class="tool-note">
+      Category shares are the mean percentage of total spend across the eight historical
+      jobs in the database. You supply the cost basis &mdash; Sendero&rsquo;s own per-job
+      pricing is not published here.
+    </p>
   </div>
+
+  <p style="margin-top:1.8em">
+    <a class="btn" href="project-2.html">How it was built &rarr;</a>
+  </p>
 
 </main>
 
@@ -104,6 +129,7 @@
   btn.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';apply(n);save(n)});
 })();
 </script>
+<script src="estimator.js"></script>
 
 </body>
 </html>

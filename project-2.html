@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Will Gray — Construction Estimating Tool</title>
+<meta name="description" content="An automated construction cost estimation tool built for Sendero Homes — problem, role, data and method.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+  .codeblock{
+    border:1px solid var(--rule);
+    background:var(--surface);
+    font-family:var(--ff-mono);
+    font-size:12.5px;
+    line-height:1.7;
+  }
+  .codeblock .body{padding:14px 16px;overflow-x:auto}
+  .codeblock pre{margin:0;font:inherit;color:var(--ink-2);white-space:pre}
+  .codeblock .k{color:var(--brass)}
+  .codeblock .c{color:var(--mute)}
+</style>
+</head>
+<body>
+
+<header class="sitehead">
+  <div class="frame inner">
+    <a class="wordmark" href="index.html">Will Gray</a>
+    <nav class="menu" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="resume.html">Resume</a>
+    </nav>
+  </div>
+</header>
+
+<main class="frame">
+
+  <div class="pagehead">
+    <p class="eyebrow">Sendero Homes &middot; Austin, Texas &middot; May&ndash;August 2026</p>
+    <h1>An automated construction cost estimation tool</h1>
+    <p class="lede">
+      Built during my internship to streamline budget creation and project cost analysis
+      &mdash; turning a spreadsheet of past jobs into something a new build can be priced
+      against.
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>The problem</h2></div>
+  <div class="prose">
+    <p>
+      Every custom home Sendero had built was recorded, but the record lived in one master
+      spreadsheet. The numbers were all there and none of them were reachable: to price a
+      new build you either dug through old jobs by hand or fell back on a rule-of-thumb
+      cost per square foot.
+    </p>
+    <p>
+      A rule of thumb is a single number standing in for a lot of variation. Two homes of
+      the same size can differ enormously depending on whether there is a pool, an
+      elevator, structural steel, or a steep lot that needs retaining walls. The company
+      had the evidence to be more precise than that; it just was not in a usable shape.
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>My role</h2></div>
+  <div class="prose">
+    <p>
+      I developed the tool. That covered designing the database schema, migrating the
+      historical job data into it, writing the estimation logic, and building the interface
+      that exposes it.
+    </p>
+    <ul class="detail">
+      <li><strong>Applied construction cost estimation and project budgeting knowledge</strong> to design estimation logic that stays accurate as more jobs are added.</li>
+      <li><strong>Collaborated with the estimating and marketing teams</strong> to align the tool with how the company actually works, and to support business development.</li>
+    </ul>
+  </div>
+
+  <div class="sectionhead"><h2>Data and method</h2></div>
+  <div class="prose">
+    <h3 style="margin-top:1.2em">Data</h3>
+    <ul class="detail">
+      <li><strong>Eight historical homes</strong> from the company master spreadsheet, each with its total construction cost and heated-cooled, covered, garage, and patio square footage.</li>
+      <li><strong>Forty cost categories</strong> per job &mdash; permits, foundations, framing, plumbing, electrical, roofing, cabinets, landscaping and the rest &mdash; with both dollar amounts and each category's share of the total.</li>
+      <li><strong>Nine owner-allowance items</strong> tracked separately, because things like cabinets and pools vary by client choice rather than by build method.</li>
+      <li><strong>Cost-driving specs</strong> pulled from each job's plan set: framing type, roof system, exterior envelope, window package, interior finish tier, and specialty items.</li>
+    </ul>
+
+    <h3>Method</h3>
+    <p>
+      The jobs go into a PostgreSQL database rather than a spreadsheet, which makes the
+      history queryable. A new budget is then projected by taking a cost basis and
+      distributing it across the forty categories according to the share each one has
+      historically taken.
+    </p>
+    <p>
+      Two refinements matter more than they sound. The first is <strong>recency
+      weighting</strong> &mdash; a 2025 job should count for more than a 2022 one, because
+      material and labour prices move. The second is a flag for whether a job's date is a
+      completion or an excavation start, since three of the eight were still in progress and
+      treating their dates as completions would have skewed the weighting.
+    </p>
+    <p>
+      The specs table is what lifts this above an average. Rather than pricing a new plan
+      against the mean of eight homes, it can be matched to the closest real comparable
+      &mdash; the one with the same framing type, roof system, and finish tier.
+    </p>
+  </div>
+
+  <figure>
+    <div class="codeblock">
+      <div class="panel-bar"><span>schema_historical.sql</span><span class="hi">PostgreSQL</span></div>
+      <div class="body">
+<pre><span class="c">-- one row per reference home used as a cost baseline</span>
+<span class="k">create table</span> historical_projects (
+  name                      text   <span class="k">not null</span>,
+  total_construction_cost   numeric(14,2),
+  heated_cooled_sqft        numeric(10,2),
+  cost_per_hc_build_only    numeric(10,2),
+  cost_per_covered_with_fee numeric(10,2),
+  status                    text   <span class="c">-- complete | in_progress</span>
+);
+
+<span class="c">-- category-by-category dollar breakdown</span>
+<span class="k">create table</span> historical_project_costs (
+  cost_category_code  text,   <span class="c">-- '3100 - Framing Materials'</span>
+  amount              numeric(14,2),
+  pct_of_total        numeric(8,6)
+);</pre>
+      </div>
+    </div>
+    <figcaption>
+      The core of the historical-cost schema. A 622-line migration loads the real job data;
+      a later pass adds the date weighting so recent jobs carry more of the average.
+    </figcaption>
+  </figure>
+
+  <div class="sectionhead">
+    <h2>The tool</h2>
+    <span class="note">Working demo</span>
+  </div>
+
+  <div class="prose" style="max-width:74ch">
+    <p>
+      This runs the same allocation the database does. Enter a size and a cost basis and it
+      distributes the budget across all forty categories, each taking its real share of
+      total spend.
+    </p>
+  </div>
+
+  <div class="tool" id="tool">
+    <div class="panel-bar">
+      <span>Budget projector</span>
+      <span class="hi">40 categories &middot; 8-job weighting</span>
+    </div>
+
+    <div class="tool-controls">
+      <div class="field">
+        <label for="t-sqft">Heated &amp; cooled area</label>
+        <div class="wrap">
+          <input id="t-sqft" type="number" min="500" max="30000" step="50" value="6200" inputmode="numeric">
+          <span class="suf">sq ft</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="t-rate">Build cost basis</label>
+        <div class="wrap">
+          <span class="pre">$</span>
+          <input id="t-rate" type="number" min="50" max="2000" step="5" value="520" inputmode="numeric">
+          <span class="suf">/ sq ft</span>
+        </div>
+      </div>
+      <div class="tool-total">
+        <div class="amt" id="t-total">$3,224,000</div>
+        <div class="sub">Projected construction cost</div>
+      </div>
+    </div>
+
+    <div class="bars" id="t-bars"></div>
+
+    <div class="tool-foot">
+      <button class="chip" id="t-toggle" type="button">Show all 40 categories</button>
+      <span class="tool-hint" id="t-shown">Top 12 of 40 shown</span>
+    </div>
+
+    <p class="tool-note">
+      Category shares are the mean percentage of total spend across the eight historical
+      jobs. You supply the cost basis &mdash; Sendero&rsquo;s own per-job pricing and client
+      details are not published here.
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>What I found</h2></div>
+  <div class="prose">
+    <p>
+      The structure of a custom-home budget is less intuitive than it looks. Across the
+      eight jobs, <strong>exterior structures</strong> is the single largest category at
+      10.6% of total spend &mdash; ahead of windows and doors at 8.1%, cabinets at 7.7%, and
+      framing materials at 7.0%. The things people assume dominate a build do not.
+    </p>
+    <p>
+      Putting that in front of someone changes the conversation. A client weighing an
+      outdoor structure against a finish upgrade can see which decision actually moves the
+      budget, and by how much, before anything is drawn.
+    </p>
+    <p>
+      The other finding was about the data itself. Three of the eight jobs were still in
+      progress, and their recorded dates were excavation starts rather than completions.
+      Treating those as finished jobs would have quietly distorted every recency-weighted
+      average the tool produced &mdash; a small modelling detail with disproportionate
+      consequences.
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>What I would do differently</h2></div>
+  <div class="prose">
+    <p>
+      <strong>Access control from the start.</strong> As built, every tool can see
+      everything. Before this holds real financial data for a whole team, it needs a
+      decision about who should see pricing versus financials versus only their own
+      projects, and filtering by the calling user's role. Retrofitting permissions is harder
+      than designing for them.
+    </p>
+    <p>
+      <strong>More jobs before trusting the weighting.</strong> Eight is enough to show the
+      shape of a budget and not enough to be confident about any one category. Two of the
+      forty appear in only a subset of jobs, so their averages rest on very little. I would
+      be clearer in the interface about which figures are well-evidenced and which are not.
+    </p>
+    <p>
+      <strong>Somewhere persistent to run.</strong> It runs locally, which means it is
+      useful to whoever starts it rather than to the team. Getting it onto a small always-on
+      server was the obvious next milestone.
+    </p>
+  </div>
+
+  <dl class="notes">
+    <div><dt>Historical jobs</dt><dd>8</dd></div>
+    <div><dt>Cost categories</dt><dd>40</dd></div>
+    <div><dt>Allowance items</dt><dd>9</dd></div>
+    <div><dt>Migration</dt><dd>622<span class="u">lines of SQL</span></dd></div>
+    <div><dt>Largest category</dt><dd>10.6%<span class="u">exterior structures</span></dd></div>
+  </dl>
+
+  <p style="margin-top:2em">
+    <a class="btn" href="projects.html">&larr; All projects</a>
+  </p>
+
+</main>
+
+<footer class="sitefoot">
+  <div class="frame inner">
+    <a class="mail" href="mailto:willagray04@gmail.com">willagray04@gmail.com</a>
+    <div>
+      Will Gray &middot; College Station, Texas<br>
+      Texas A&amp;M University &middot; December 2026
+    </div>
+  </div>
+</footer>
+
+<button class="themebtn" id="themebtn" type="button" aria-label="Switch colour theme">
+  <span class="dot" aria-hidden="true"></span><span id="themelabel">Light</span>
+</button>
+
+<script>
+(function(){
+  var root=document.documentElement,btn=document.getElementById('themebtn'),lab=document.getElementById('themelabel');
+  function stored(){try{return localStorage.getItem('wg-theme')}catch(e){return null}}
+  function save(v){try{localStorage.setItem('wg-theme',v)}catch(e){}}
+  function cur(){return root.getAttribute('data-theme')||'dark'}
+  function apply(t){root.setAttribute('data-theme',t);lab.textContent=t==='dark'?'Light':'Dark'}
+  var s=stored();
+  if(s==='dark'||s==='light'){apply(s)}else{lab.textContent=cur()==='dark'?'Light':'Dark'}
+  btn.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';apply(n);save(n)});
+})();
+</script>
+<script src="estimator.js"></script>
+
+</body>
+</html>

@@ -9,8 +9,10 @@ index.html       home — name, headline, featured project
 about.html       about me and the work I want
 projects.html    a card for each project, linking to its page
 project-1.html   Brazos County multi-hazard risk mapping, in full
+project-2.html   Sendero Homes estimating tool, in full
 resume.html      resume as a web page, with a PDF download
 style.css        shared by every page
+estimator.js     budget projector, shared by index and project-2
 resume.pdf       downloadable resume
 assets/          figures and photographs
 assets/roadmap/  all 58 pages of the Pine Island roadmap
@@ -50,10 +52,36 @@ choice is remembered per browser.
 sips -s format jpeg -s formatOptions 74 -Z 1500 input.pdf --out assets/output.jpg
 ```
 
+## The budget projector
+
+`estimator.js` holds `COSTCATS` — forty `[code, name, share, jobs]` rows, each
+share being that category's mean percentage of total spend across the eight
+historical jobs. It drives the projector on both `index.html` and
+`project-2.html`; one file, so the two can never drift apart. A page gets the
+tool by including the markup ids `#t-sqft #t-rate #t-total #t-bars` and loading
+the script.
+
+No Sendero pricing ships in it. The reader supplies the cost basis and only the
+percentage structure is baked in — the client names and per-job totals in the
+original SQL stay out of the repo.
+
+## Map thumbnails
+
+Card thumbnails are cropped to the map body (`assets/thumb-*.jpg`), dropping the
+white paper margins, title blocks and legends that made them glare against the
+dark page. The full sheets with their legends belong on the project pages. CSS
+also takes a little brightness off light images at rest and restores it on hover.
+
+To crop a new one:
+
+```bash
+sips --cropOffset <top> <left> --cropToHeightWidth <h> <w> in.jpg --out out.jpg
+```
+
 ## Adding the remaining project pages
 
-`projects.html` has six cards. Only the first links to a real page; the other
-five are marked `[ADD]`. To add one, copy `project-1.html`, keep the same
+`projects.html` has six cards. Two link to real pages; the other four are marked
+`[ADD]`. To add one, copy `project-1.html`, keep the same
 six sections (problem, role, data and method, figure, what I found, what I would
 do differently), and point the card's link at it.
 
