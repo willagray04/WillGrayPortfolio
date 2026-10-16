@@ -10,9 +10,15 @@ about.html       about me and the work I want
 projects.html    a card for each project, linking to its page
 project-1.html   Brazos County multi-hazard risk mapping, in full
 project-2.html   Sendero Homes estimating tool, in full
+project-3.html   Volcanic Hazards Map, Oregon
+project-4.html   Tornadoes and population density StoryMap
+project-5.html   GNSS geodetic control and UAS survey
+project-6.html   Pine Island stormwater utility roadmap
 resume.html      resume as a web page, with a PDF download
 style.css        shared by every page
 estimator.js     budget projector, shared by index and project-2
+flightmap.js     Leaflet flight map, used by project-5
+roadmap.js       58-page document viewer, used by project-6
 resume.pdf       downloadable resume
 assets/          figures and photographs
 assets/roadmap/  all 58 pages of the Pine Island roadmap
@@ -36,9 +42,10 @@ there is nothing to type.
 ## Conventions
 
 **`[ADD]` markers.** Anything the source material did not supply is marked
-`<span class="add">[ADD]</span>` rather than guessed at — unwritten project
-pages, results that do not exist yet, team member names. Search for `class="add"`
-to find them all. Fill them in as the facts arrive.
+`<span class="add">[ADD]</span>` rather than guessed at. Five remain, all on
+`project-1.html`: the Brazos County results and reflection, which cannot be
+written until the analysis is run, and the team member names, which the proposal
+leaves as placeholders. Search for `class="add"` to find them.
 
 **Design tokens.** Colours, fonts and widths are CSS variables in the `:root`
 block at the top of `style.css`. Change a value once and every page follows.
@@ -78,21 +85,20 @@ To crop a new one:
 sips --cropOffset <top> <left> --cropToHeightWidth <h> <w> in.jpg --out out.jpg
 ```
 
-## Adding the remaining project pages
+## Project pages
 
-`projects.html` has six cards. Two link to real pages; the other four are marked
-`[ADD]`. To add one, copy `project-1.html`, keep the same
-six sections (problem, role, data and method, figure, what I found, what I would
-do differently), and point the card's link at it.
+All six cards on `projects.html` now link to a real page. Each page keeps the
+same six sections: the problem, my role, the data and method, a figure, what I
+found, and what I would do differently. To add a seventh, copy any of them and
+point a new card at it.
 
-The earlier single-page version of this site — with a 58-page roadmap viewer, an
-interactive construction budget projector, and a Leaflet map of five drone flight
-sites built from GPS EXIF — is preserved on the `one-page-version` branch. Those
-components can be lifted into project pages 2 through 5:
+Two carry interactive pieces lifted from the retired single-page version, which
+is still on the `one-page-version` branch:
 
 ```bash
 git show one-page-version:index.html > /tmp/one-page.html
 ```
+
 
 ## Leaflet
 

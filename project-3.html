@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Will Gray — Volcanic Hazards Map</title>
+<meta name="description" content="Volcanic Hazards Map of Oregon - pairing eruption history with population density and the emergency response network.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="sitehead">
+  <div class="frame inner">
+    <a class="wordmark" href="index.html">Will Gray</a>
+    <nav class="menu" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="resume.html">Resume</a>
+    </nav>
+  </div>
+</header>
+
+<main class="frame">
+
+  <div class="pagehead">
+    <p class="eyebrow">Cartography &middot; GEOG 390, Lab 2 &middot; October 2025</p>
+    <h1>Volcanic hazards, and who lives close to them</h1>
+    <p class="lede">A reference hazards map for Oregon built to answer an exposure question, not just a geological one: how many people sit near an active volcano, and how far are they from a hospital?</p>
+  </div>
+
+  <div class="sectionhead"><h2>The problem</h2></div>
+  <div class="prose">
+    <p>
+      Oregon&rsquo;s Cascade volcanoes are an active hazard, and the usual way of mapping
+      them answers only half the question. A map of where the volcanoes are tells you
+      nothing about who lives near them, or how far those people sit from help.
+    </p>
+    <p>
+      So the brief I set myself was an exposure map rather than a geology map: put eruption
+      history, population, and the emergency response network on one sheet, and let the
+      reader see where the three overlap.
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>My role</h2></div>
+  <div class="prose">
+    <p>
+      Sole author. I selected the layers, made the classification and symbology decisions,
+      and produced the final sheet in ArcGIS Pro.
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>Data and method</h2></div>
+  <div class="prose">
+    <ul class="detail">
+      <li><strong>Population density by county</strong> &mdash; a five-class choropleth spanning 0.72 to 1,600 people per square mile, on a sequential tan-to-brown ramp.</li>
+      <li><strong>Active volcanoes</strong> &mdash; graduated triangles scaled by eruption count, with breaks at one, five and ten, labelled for the named features: Hood, Belknap, Newberry, Crater Lake, North Sister Field and Sand Mountain Field.</li>
+      <li><strong>The response network</strong> &mdash; highways split by class (interstate, US, state, unclassified) and hospitals as a distinct cross glyph.</li>
+      <li><strong>Map furniture</strong> &mdash; inset locator, graduated scale bar in miles, north arrow, and full source attribution to Esri, TomTom, Garmin, FAO, NOAA, USGS and OpenStreetMap contributors.</li>
+    </ul>
+
+    <h3>Why it is symbolised this way</h3>
+    <p>
+      The two hazard-facing layers compete for attention, so only one of them can win. The
+      density ramp is deliberately muted and the eruption symbols are a saturated red, which
+      keeps population as context and hazard as subject. Hospitals get their own glyph
+      rather than another dot, so emergency infrastructure reads as its own system and not
+      as basemap texture.
+    </p>
+  </div>
+
+  <figure>
+    <div class="sheet">
+      <img class="sheet-img" src="assets/volcanic-hazards-oregon.jpg" width="1500" height="1159"
+           alt="Volcanic Hazards Map of Oregon: county population density as a tan-to-brown choropleth, active volcanoes as graduated red triangles, highways, hospitals, legend, inset locator and scale bar.">
+    </div>
+    <figcaption>
+      The full sheet as submitted, with its legend and title block. Built in ArcGIS Pro,
+      6 October 2025.
+    </figcaption>
+  </figure>
+
+  <div class="sectionhead"><h2>What I found</h2></div>
+  <div class="prose">
+    <p>
+      Exposure concentrates in one corridor. The densest counties run down the Willamette
+      Valley, and they sit directly west of the features carrying the highest eruption
+      counts &mdash; Hood, Belknap, North Sister Field and Sand Mountain Field. The Portland
+      metro area, the darkest band on the map, is the closest large population to Hood.
+    </p>
+    <p>
+      The inverse is just as visible. Crater Lake and Newberry are significant features
+      sitting in sparsely populated country, where the same eruption would put far fewer
+      people at risk. Hazard and exposure are not the same map, which is the whole argument
+      for drawing them together.
+    </p>
+    <p>
+      Hospital coverage follows population rather than hazard. The cross symbols cluster in
+      that same western corridor, leaving the eastern two-thirds of the state with few
+      hospitals and long highway distances between them &mdash; thin coverage, though also
+      few people inside it.
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>What I would do differently</h2></div>
+  <div class="prose">
+    <p>
+      <strong>Answer the exposure question directly.</strong> As drawn, the reader does the
+      overlay in their head: they see density, they see eruption counts, and they infer the
+      interaction. A bivariate scheme, or a derived layer such as population within a set
+      distance of an active feature, would state the conclusion the map currently only
+      implies.
+    </p>
+    <p>
+      <strong>Give the title block less of the sheet.</strong> The legend column takes
+      roughly a third of the page, pushing the map off-centre and squeezing the eastern
+      counties. Stacking the legend more tightly would buy the map space it could use.
+    </p>
+    <p>
+      <strong>Tighten the legend copy.</strong> &ldquo;Active Volcanos&rdquo; should read
+      &ldquo;Volcanoes&rdquo;, and the eruption-count classes would be clearer labelled as
+      ranges than as single values.
+    </p>
+  </div>
+
+  <dl class="notes">
+    <div><dt>Density classes</dt><dd>5<span class="u">0.72&ndash;1,600 / sq mi</span></dd></div>
+    <div><dt>Named features</dt><dd>6<span class="u">fields &amp; peaks</span></dd></div>
+    <div><dt>Symbol breaks</dt><dd>1 / 5 / 10<span class="u">eruptions</span></dd></div>
+    <div><dt>Overlays</dt><dd>4<span class="u">highway classes + hospitals</span></dd></div>
+    <div><dt>Built in</dt><dd>ArcGIS Pro</dd></div>
+  </dl>
+
+  <p style="margin-top:2em">
+    <a class="btn" href="projects.html">&larr; All projects</a>
+  </p>
+
+</main>
+
+<footer class="sitefoot">
+  <div class="frame inner">
+    <a class="mail" href="mailto:willagray04@gmail.com">willagray04@gmail.com</a>
+    <div>
+      Will Gray &middot; College Station, Texas<br>
+      Texas A&amp;M University &middot; December 2026
+    </div>
+  </div>
+</footer>
+
+<button class="themebtn" id="themebtn" type="button" aria-label="Switch colour theme">
+  <span class="dot" aria-hidden="true"></span><span id="themelabel">Light</span>
+</button>
+
+<script>
+(function(){
+  var root=document.documentElement,btn=document.getElementById('themebtn'),lab=document.getElementById('themelabel');
+  function stored(){try{return localStorage.getItem('wg-theme')}catch(e){return null}}
+  function save(v){try{localStorage.setItem('wg-theme',v)}catch(e){}}
+  function cur(){return root.getAttribute('data-theme')||'dark'}
+  function apply(t){root.setAttribute('data-theme',t);lab.textContent=t==='dark'?'Light':'Dark'}
+  var s=stored();
+  if(s==='dark'||s==='light'){apply(s)}else{lab.textContent=cur()==='dark'?'Light':'Dark'}
+  btn.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';apply(n);save(n)});
+})();
+</script>
+
+</body>
+</html>

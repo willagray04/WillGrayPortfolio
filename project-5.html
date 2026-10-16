@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Will Gray — GNSS Control and UAS Survey</title>
+<meta name="description" content="Geodetic control established with a Leica GS15 and processed through NOAA OPUS, five UAS flight sets, and a handheld GPS reliability study.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="sitehead">
+  <div class="frame inner">
+    <a class="wordmark" href="index.html">Will Gray</a>
+    <nav class="menu" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="resume.html">Resume</a>
+    </nav>
+  </div>
+</header>
+
+<main class="frame">
+
+  <div class="pagehead">
+    <p class="eyebrow">Survey &middot; GEOG 352 and field work &middot; 2024&ndash;2025</p>
+    <h1>Setting the control everything else gets measured from</h1>
+    <p class="lede">Four geodetic control points established and verified through NOAA OPUS, five sets of drone imagery flown over surveyed ground control, and a study asking how far a phone can be trusted against survey-grade equipment.</p>
+  </div>
+
+  <div class="sectionhead"><h2>The problem</h2></div>
+  <div class="prose">
+    <p>
+      Before a site plan, a volume calculation or a drone flight means anything, something
+      on the ground has to be tied to a known coordinate. TxDOT requires GNSS control for
+      surveying, civil engineering and construction precisely because everything downstream
+      inherits its accuracy &mdash; lane widening and road alignment are only as good as the
+      control they were set out from, and rework is expensive.
+    </p>
+    <p>
+      There is a second, quieter question underneath it. Everyone now carries a GPS
+      receiver in their pocket. How much of this work actually needs survey-grade equipment,
+      and how much could be done with a phone?
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>My role</h2></div>
+  <div class="prose">
+    <p>
+      Field data collection and processing, and the written report. I ran static and
+      real-time observations on the Leica GS15, processed the sessions through NOAA OPUS,
+      compared coordinates across datums, and documented the results to TxDOT&rsquo;s
+      reporting standard. The survey was performed under the direct supervision of a Texas
+      Registered Professional Land Surveyor.
+    </p>
+    <p>
+      On the handheld-GPS study I worked with Blane Frost and Lion Williamson, collecting
+      and comparing the field data and co-authoring the poster.
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>Data and method</h2></div>
+  <div class="prose">
+    <h3 style="margin-top:1.2em">Geodetic control</h3>
+    <ul class="detail">
+      <li><strong>Four control points established</strong> &mdash; TAMUNICK, TAMUCVEN01, TAMUCVEN02 and TAMUCVEN03.</li>
+      <li><strong>Leica GS15 receiver</strong> &mdash; dual-frequency L1/L2, multi-constellation across GPS, GLONASS, Galileo and BeiDou; quoted RTK accuracy 8&nbsp;mm + 1&nbsp;ppm horizontal and 15&nbsp;mm + 1&nbsp;ppm vertical; logging RINEX.</li>
+      <li><strong>Static sessions processed through NOAA OPUS</strong>, which solves against the Continuously Operating Reference Station network rather than a local base.</li>
+      <li><strong>Real-time positions from TxDOT&rsquo;s Virtual Reference Station network</strong>, with NGS NCAT used to convert and compare coordinates across datums.</li>
+      <li><strong>Reported to TxDOT Survey Manual Section 2</strong> project documentation requirements.</li>
+    </ul>
+
+    <h3>UAS imagery</h3>
+    <ul class="detail">
+      <li><strong>Five flight sets, 416 geotagged frames, roughly 2.0&nbsp;GB</strong> &mdash; Wolf Creek, Lampasas, Galveston, J. Davis and one further site.</li>
+      <li><strong>Surveyed ground control files</strong> alongside the imagery, so the frames can be registered rather than floated.</li>
+      <li><strong>Drafted output</strong> &mdash; a topographic plat with spot elevations and contours at 1&Prime;&nbsp;=&nbsp;75&prime;, with title block, graphic scale and north arrow.</li>
+    </ul>
+
+    <h3>The handheld comparison</h3>
+    <p>
+      Five landmarks on the Texas A&amp;M campus &mdash; the Centennial Eagle, the 12th Man
+      statue, John David Crow, Danger 79er and Lawrence Sullivan Ross &mdash; were surveyed
+      using the Field Maps app on iPhone 12, 13 and 14, then compared against reference
+      points taken from remotely sensed imagery in ArcGIS Pro.
+    </p>
+  </div>
+
+  <figure>
+    <div class="panel">
+      <div class="panel-bar">
+        <span>Flight sites &amp; geodetic control &middot; Texas</span>
+        <span class="hi">5 sites &middot; 416 geotagged frames</span>
+      </div>
+      <div class="mapcanvas" id="flightmap"></div>
+      <div class="maplist" id="maplist"></div>
+    </div>
+    <figcaption>
+      Footprints drawn from the GPS coordinates embedded in the drone imagery itself &mdash;
+      every frame carries the position it was taken from. Control markers are the
+      approximate occupation positions read from the RINEX observation headers; final
+      coordinates came out of OPUS. Drag to pan, scroll to zoom.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <div class="sheet">
+      <img class="sheet-img" src="assets/topographic-plat.jpg" width="1004" height="1300"
+           alt="CAD topographic plat with spot elevations, contour lines, graphic scale in feet, north arrow and a survey title block.">
+    </div>
+    <figcaption>
+      Topographic plat drafted from the surveyed points &mdash; 1&Prime;&nbsp;=&nbsp;75&prime;,
+      spot elevations in feet.
+    </figcaption>
+  </figure>
+
+  <div class="sectionhead"><h2>What I found</h2></div>
+  <div class="prose">
+    <p>
+      <strong>The control held.</strong> Four points were established with accuracies that
+      support the civil and construction work they were set for, verified against the CORS
+      network through OPUS rather than taken on trust from a single receiver.
+    </p>
+    <p>
+      <strong>Handheld GPS is better than expected, within limits.</strong> Comparing the
+      Field Maps data against the ArcGIS Pro reference points returned an average positional
+      deviation of under one metre, and that held consistently across the iPhone 12, 13 and
+      14. For general field applications &mdash; environmental monitoring, basic navigation,
+      anything where sub-metre precision is not critical &mdash; a phone is a practical
+      tool.
+    </p>
+    <p>
+      <strong>But not for the work that pays for control.</strong> Those same deviations are
+      insufficient for high-precision tasks such as infrastructure planning or cadastral
+      surveying, which still need RTK. The gap between &ldquo;under a metre&rdquo; and
+      &ldquo;8&nbsp;mm + 1&nbsp;ppm&rdquo; is exactly the gap between a convenient field tool
+      and a legal boundary.
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>What I would do differently</h2></div>
+  <div class="prose">
+    <p>
+      <strong>Test somewhere harder.</strong> The handheld study ran on an open urban campus
+      with favourable satellite visibility, which is close to a best case. The findings may
+      not represent performance in dense urban canyons or under forest canopy, and those are
+      the conditions where the answer actually matters. Repeating it across varied
+      environments is the obvious next step.
+    </p>
+    <p>
+      <strong>Widen the sample.</strong> Five landmarks and three handsets of the same brand
+      is a thin basis for a general claim about handheld GPS. More points, more device
+      makes, and repeat occupations at different times of day would say something much
+      firmer.
+    </p>
+    <p>
+      <strong>Close the loop on the imagery.</strong> The flight sets and their ground
+      control exist, but the photogrammetric products built from them are not part of this
+      write-up. Carrying one site all the way through to a registered surface and a volume
+      calculation would demonstrate the whole chain rather than its two ends.
+    </p>
+  </div>
+
+  <dl class="notes">
+    <div><dt>Control points</dt><dd>4<span class="u">OPUS / CORS verified</span></dd></div>
+    <div><dt>RTK accuracy</dt><dd>8 mm<span class="u">+1 ppm horizontal</span></dd></div>
+    <div><dt>Imagery</dt><dd>416<span class="u">frames &middot; ~2.0 GB</span></dd></div>
+    <div><dt>Flight sites</dt><dd>5</dd></div>
+    <div><dt>Handheld GPS test</dt><dd>&lt; 1 m<span class="u">mean deviation</span></dd></div>
+  </dl>
+
+  <p style="margin-top:2em">
+    <a class="btn" href="projects.html">&larr; All projects</a>
+  </p>
+
+</main>
+
+<footer class="sitefoot">
+  <div class="frame inner">
+    <a class="mail" href="mailto:willagray04@gmail.com">willagray04@gmail.com</a>
+    <div>
+      Will Gray &middot; College Station, Texas<br>
+      Texas A&amp;M University &middot; December 2026
+    </div>
+  </div>
+</footer>
+
+<button class="themebtn" id="themebtn" type="button" aria-label="Switch colour theme">
+  <span class="dot" aria-hidden="true"></span><span id="themelabel">Light</span>
+</button>
+
+<script>
+(function(){
+  var root=document.documentElement,btn=document.getElementById('themebtn'),lab=document.getElementById('themelabel');
+  function stored(){try{return localStorage.getItem('wg-theme')}catch(e){return null}}
+  function save(v){try{localStorage.setItem('wg-theme',v)}catch(e){}}
+  function cur(){return root.getAttribute('data-theme')||'dark'}
+  function apply(t){root.setAttribute('data-theme',t);lab.textContent=t==='dark'?'Light':'Dark'}
+  var s=stored();
+  if(s==='dark'||s==='light'){apply(s)}else{lab.textContent=cur()==='dark'?'Light':'Dark'}
+  btn.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';apply(n);save(n)});
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="flightmap.js"></script>
+</body>
+</html>

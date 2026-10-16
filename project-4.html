@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Will Gray — Tornadoes and Population Density</title>
+<meta name="description" content="A bivariate thematic map and published ArcGIS StoryMap testing whether US population growth is moving more people into tornado-prone ground.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="sitehead">
+  <div class="frame inner">
+    <a class="wordmark" href="index.html">Will Gray</a>
+    <nav class="menu" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="resume.html">Resume</a>
+    </nav>
+  </div>
+</header>
+
+<main class="frame">
+
+  <div class="pagehead">
+    <p class="eyebrow">Thematic cartography &middot; GEOG 232 final project &middot; Fall 2024</p>
+    <h1>Is population growth moving people into tornado country?</h1>
+    <p class="lede">A bivariate thematic map and a published ArcGIS StoryMap, setting seventy-two years of tornado tracks against county population density for 2010 and 2020.</p>
+  </div>
+
+  <div class="sectionhead"><h2>The problem</h2></div>
+  <div class="prose">
+    <p>
+      Over a thousand tornadoes are recorded in the United States in an average year. The
+      question this project asked is not where they happen &mdash; that is well mapped
+      &mdash; but whether population growth is steadily moving more people into the ground
+      where they happen most.
+    </p>
+    <p>
+      I wrote it for a specific audience rather than a general one: people living in
+      tornado-prone areas, emergency management staff, urban planners and the officials who
+      decide where preparedness money goes.
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>My role</h2></div>
+  <div class="prose">
+    <p>
+      Sole author. I chose the topic and data, designed the bivariate thematic map in
+      ArcGIS Pro, published it to ArcGIS Online, built the StoryMap around it, ran the peer
+      review, and produced the revised final version.
+    </p>
+  </div>
+
+  <div class="sectionhead"><h2>Data and method</h2></div>
+  <div class="prose">
+    <ul class="detail">
+      <li><strong>Tornado tracks, 1950&ndash;2022</strong> &mdash; seventy-two years of records, colour-coded by intensity so frequency and severity read together.</li>
+      <li><strong>County population density for 2010 and 2020</strong> &mdash; two census snapshots, so change over the decade is visible rather than a single static surface.</li>
+      <li><strong>Built in ArcGIS Pro</strong>, published to ArcGIS Online, and wrapped in a StoryMap that introduces the topic before the map appears.</li>
+    </ul>
+
+    <h3>The review cycle</h3>
+    <p>
+      The draft went to three reviewers, each asked for three strengths and three
+      criticisms &mdash; nine critiques in total. They were consistent with one another:
+      the sheer volume of tornado points overwhelmed the density layer underneath, the map
+      had no way to toggle layers, and the legend was missing.
+    </p>
+    <p>
+      I revised against that feedback, added the missing legend, replaced the supporting
+      image with one showing tornado damage to a community and repositioned it so the page
+      flowed better, and expanded the written analysis of how density and tornado frequency
+      relate.
+    </p>
+  </div>
+
+  <figure>
+    <div class="panel">
+      <div class="panel-bar">
+        <span>Published StoryMap &middot; ArcGIS Online</span>
+        <span class="hi">Interactive</span>
+      </div>
+      <div style="padding:22px 18px">
+        <p style="margin:0 0 16px;font-size:16px;color:var(--ink-2);max-width:62ch">
+          The map for this project is interactive rather than a static sheet &mdash; tornado
+          tracks over county density, pannable and zoomable, inside the StoryMap narrative.
+        </p>
+        <a class="btn" href="https://arcg.is/GyHGj" target="_blank" rel="noopener">Open the StoryMap &rarr;</a>
+      </div>
+    </div>
+    <figcaption>
+      Final StoryMap, published to the GEOG 232 group. Opens on ArcGIS Online.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <div class="sheet">
+      <img class="sheet-img" src="assets/europe-population-density.jpg" width="927" height="1200"
+           alt="Choropleth map titled Population Density of European Countries, 2008, drawn in Europe Albers Equal Area Conic projection.">
+    </div>
+    <figcaption>
+      A companion thematic map from the same course, included to show the static
+      cartography behind the StoryMap work &mdash; Population Density of European Countries,
+      2008, in Europe Albers Equal Area Conic. It is not part of the tornado project.
+    </figcaption>
+  </figure>
+
+  <div class="sectionhead"><h2>What I found</h2></div>
+  <div class="prose">
+    <p>
+      There is significant overlap between densely populated areas and tornado occurrence,
+      and it concentrates in the Midwest and the South. Tornado-prone country and growing
+      urban centres are increasingly the same country, which raises the potential for
+      casualties and damage from a given event.
+    </p>
+    <p>The takeaways I drew for the audience were:</p>
+    <ul class="detail">
+      <li>Tornado-prone areas often coincide with growing urban centres, increasing potential casualties and damages.</li>
+      <li>Decision-makers should prioritise disaster relief and preparedness in those regions specifically.</li>
+      <li>The practical needs that follow are more robust infrastructure, improved early warning systems, and better community planning.</li>
+    </ul>
+  </div>
+
+  <div class="sectionhead"><h2>What I would do differently</h2></div>
+  <div class="prose">
+    <p>
+      <strong>The reviewers were right about the point density.</strong> I pushed back at
+      the time, because the map has to open zoomed out to show the full national extent and
+      every tornado track is in there at that scale. But the honest answer is that the
+      criticism identified a real problem even if the proposed fix did not work: at national
+      zoom the population layer is genuinely hard to read underneath the points.
+    </p>
+    <p>
+      <strong>Clustering is the fix I would build now.</strong> Grouping tracks into
+      expandable clusters would let the map open legible and still carry every record, which
+      is what the reviewers were reaching for.
+    </p>
+    <p>
+      <strong>Layer control should have been there from the start.</strong> Letting the
+      reader switch the tornado layer off to inspect density on its own costs nothing and
+      solves the overlap complaint outright.
+    </p>
+    <p>
+      <strong>I was constrained by the data I could get.</strong> The source I used would
+      not let me edit the attribute table, and it was the only one covering both population
+      density and tornadoes for the period I wanted. With more time I would have assembled
+      the two layers from separate sources and kept control over the symbology.
+    </p>
+  </div>
+
+  <dl class="notes">
+    <div><dt>Record span</dt><dd>1950&ndash;2022<span class="u">72 years of tracks</span></dd></div>
+    <div><dt>Density layers</dt><dd>2<span class="u">2010 &amp; 2020 census</span></dd></div>
+    <div><dt>Peer reviewers</dt><dd>3<span class="u">9 critiques logged</span></dd></div>
+    <div><dt>Format</dt><dd>StoryMap<span class="u">ArcGIS Online</span></dd></div>
+    <div><dt>Audience</dt><dd>Planners<span class="u">&amp; emergency management</span></dd></div>
+  </dl>
+
+  <p style="margin-top:2em">
+    <a class="btn" href="projects.html">&larr; All projects</a>
+  </p>
+
+</main>
+
+<footer class="sitefoot">
+  <div class="frame inner">
+    <a class="mail" href="mailto:willagray04@gmail.com">willagray04@gmail.com</a>
+    <div>
+      Will Gray &middot; College Station, Texas<br>
+      Texas A&amp;M University &middot; December 2026
+    </div>
+  </div>
+</footer>
+
+<button class="themebtn" id="themebtn" type="button" aria-label="Switch colour theme">
+  <span class="dot" aria-hidden="true"></span><span id="themelabel">Light</span>
+</button>
+
+<script>
+(function(){
+  var root=document.documentElement,btn=document.getElementById('themebtn'),lab=document.getElementById('themelabel');
+  function stored(){try{return localStorage.getItem('wg-theme')}catch(e){return null}}
+  function save(v){try{localStorage.setItem('wg-theme',v)}catch(e){}}
+  function cur(){return root.getAttribute('data-theme')||'dark'}
+  function apply(t){root.setAttribute('data-theme',t);lab.textContent=t==='dark'?'Light':'Dark'}
+  var s=stored();
+  if(s==='dark'||s==='light'){apply(s)}else{lab.textContent=cur()==='dark'?'Light':'Dark'}
+  btn.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';apply(n);save(n)});
+})();
+</script>
+
+</body>
+</html>

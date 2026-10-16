@@ -707,3 +707,57 @@ figcaption,.figcaption{
   font-family:var(--ff-mono);font-size:10.5px;line-height:1.6;
   letter-spacing:.03em;color:var(--mute);padding:0 16px 16px;
 }
+
+/* ============================================================
+   DOCUMENT VIEWER + MAP PANEL (project pages)
+   ============================================================ */
+.mapcanvas{height:clamp(320px,50vh,440px);width:100%;background:var(--surface-2)}
+.maplist{display:flex;flex-wrap:wrap;gap:6px;padding:12px 14px;border-top:1px solid var(--rule)}
+
+.fb-stage{
+  display:flex;align-items:center;justify-content:center;
+  gap:clamp(8px,2vw,22px);
+  padding:clamp(16px,3vw,28px) clamp(12px,2.5vw,22px);
+}
+.fb-page{
+  position:relative;flex:0 1 560px;width:100%;
+  aspect-ratio:1100/1424;
+  background:var(--surface-2);border:1px solid var(--rule);overflow:hidden;
+}
+.fb-page img{width:100%;height:100%;object-fit:contain;display:block;background:#fff}
+.fb-page.busy::after{
+  content:"Loading\2026";
+  position:absolute;inset:auto 0 12px 0;text-align:center;
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--mute);
+}
+.fb-arrow{
+  flex:none;width:42px;height:42px;display:grid;place-items:center;
+  border:1px solid var(--rule);border-radius:50%;
+  background:var(--paper);color:var(--ink);
+  font-family:var(--ff-mono);font-size:16px;line-height:1;cursor:pointer;padding:0;
+}
+.fb-arrow:hover:not(:disabled){border-color:var(--brass);color:var(--brass)}
+.fb-arrow:disabled{opacity:.3;cursor:default}
+.fb-foot{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;
+  padding:12px 14px;border-top:1px solid var(--rule);
+}
+.fb-foot label{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--mute);flex:none;
+}
+.fb-range{
+  flex:1 1 180px;min-width:120px;-webkit-appearance:none;appearance:none;
+  background:transparent;height:22px;cursor:pointer;
+}
+.fb-range::-webkit-slider-runnable-track{height:2px;background:var(--rule)}
+.fb-range::-moz-range-track{height:2px;background:var(--rule)}
+.fb-range::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--brass);border:0;margin-top:-6px}
+.fb-range::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--brass);border:0}
+.chip[aria-current="true"]{border-color:var(--brass);color:var(--ink);background:var(--accent-wash)}
+
+@media (max-width:620px){
+  .fb-stage{flex-wrap:wrap}
+  .fb-page{flex:1 1 100%;order:-1}
+}
